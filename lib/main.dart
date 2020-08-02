@@ -1,3 +1,4 @@
+import 'package:ImageTagging/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ImageTagging/models/user_modal.dart';
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
             userId: snapshot.data.uid,
           );
         } else {
-          return LoginPage();
+          return LoginScreen();
         }
       },
     );
@@ -36,7 +37,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: _getScreenId(),
       routes: {
-        LoginPage.id: (context) => LoginPage(),
+        LoginScreen.id: (context) => LoginScreen(),
+        SignupScreen.id: (context) => SignupScreen(),
         LandingScreen.id: (context) => LandingScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         Home1.id: (context) => Home1(),

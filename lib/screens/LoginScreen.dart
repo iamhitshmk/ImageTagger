@@ -1,162 +1,114 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
 import 'package:ImageTagging/screens/splashscreen.dart';
+import 'package:flutter/material.dart';
+import 'package:ImageTagging/services/auth_service.dart';
 
-class LoginPage extends StatefulWidget {
-  static final String id = "login_page";
+class LoginScreen extends StatefulWidget {
+  static final String id = 'login_screen';
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String phoneNo, smssent, verificationId;
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String _email, _password;
 
-  Future<void> verifyPhone() async {
-    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
-      this.verificationId = verId;
-    };
-    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId;
-      smsCodeDialoge(context).then((value) {
-        print("Code Sent");
-      });
-    };
-    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential auth) {};
-    final PhoneVerificationFailed verifyFailed = (AuthException e) {
-      print('${e.message}');
-    };
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNo,
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verifiedSuccess,
-      verificationFailed: verifyFailed,
-      codeSent: smsCodeSent,
-      codeAutoRetrievalTimeout: autoRetrieve,
-    );
-  }
-
-  Future<bool> smsCodeDialoge(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: Text('Provide OTP'),
-          content: TextField(
-            onChanged: (value) {
-              this.smssent = value;
-            },
-          ),
-          contentPadding: EdgeInsets.all(10.0),
-          actions: <Widget>[
-            new FlatButton(
-                onPressed: () {
-                  FirebaseAuth.instance.currentUser().then((user) {
-                    if (user != null) {
-                      print("uid" + user.uid);
-                      Firestore.instance
-                          .collection('/users')
-                          .document(user.uid)
-                          .setData({'contact': phoneNo, 'id': user.uid});
-                      Navigator.of(context).pop();
-                      Navigator.pushNamed(context, LandingScreen.id);
-                    } else {
-                      Navigator.of(context).pop();
-                      signIn(smssent);
-                    }
-                  });
-                },
-                child: Text(
-                  'Done',
-                  style: TextStyle(color: Colors.blue),
-                ))
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> signIn(String smsCode) async {
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-      Navigator.of(context).pushReplacementNamed('/loginpage');
-    }).catchError((e) {
-      print(e);
-    });
+  _submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      // Logging in the user w/ Firebase
+      AuthService.login(_email, _password);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                  child: Text('Hello',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold)),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'ImageTagging',
+                style: TextStyle(
+                  fontFamily: 'Billabong',
+                  fontSize: 50.0,
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-                  child: Text('There',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold)),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                        vertical: 10.0,
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'Email'),
+                        validator: (input) => !input.contains('@')
+                            ? 'Please enter a valid email'
+                            : null,
+                        onSaved: (input) => _email = input,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                        vertical: 10.0,
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'Password'),
+                        validator: (input) => input.length < 6
+                            ? 'Must be at least 6 characters'
+                            : null,
+                        onSaved: (input) => _password = input,
+                        obscureText: true,
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Container(
+                      width: 250.0,
+                      child: FlatButton(
+                        onPressed: _submit,
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Container(
+                      width: 250.0,
+                      child: FlatButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, LoginScreen.id),
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'Go to Signup',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
-                  child: Text('.',
-                      style: TextStyle(
-                          fontSize: 80.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green)),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: 'Phone No',
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green))),
-                  onChanged: (value) {
-                    this.phoneNo = value;
-                  },
-                ),
-                SizedBox(height: 10.0),
-                RaisedButton(
-                  onPressed: verifyPhone,
-                  child: Text(
-                    'Verify',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat'),
-                  ),
-                  elevation: 7.0,
-                  color: Colors.green,
-                )
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
