@@ -1,15 +1,11 @@
 import 'package:ImageTagging/common/custom_app_bar.dart';
-import 'package:ImageTagging/screens/home1.dart';
-import 'package:ImageTagging/screens/home_screen.dart';
+import 'package:ImageTagging/screens/Dashboard.dart';
+import 'package:ImageTagging/screens/HomeScreen.dart';
 import 'package:ImageTagging/utils/strings.dart';
 import 'package:ImageTagging/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatefulWidget {
-  static final String id = "landing_screen";
-  final String userId;
-  LandingScreen({this.userId});
-
   @override
   _LandingScreenState createState() => _LandingScreenState();
 }
@@ -66,7 +62,8 @@ class _LandingScreenState extends State<LandingScreen> {
             right: -30,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, HomeScreen.id);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               },
               child: Container(
                 width: 100,

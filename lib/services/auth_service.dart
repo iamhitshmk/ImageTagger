@@ -23,7 +23,7 @@ class AuthService {
           'email': email,
         });
         Provider.of<UserData>(context).currentUserId = signedInUser.uid;
-        Navigator.pushReplacementNamed(context, LandingScreen.id);
+        // Navigator.pushReplacementNamed(context, LandingScreen);
       }
     } catch (e) {
       print(e);

@@ -1,25 +1,17 @@
-import 'package:ImageTagging/screens/ForgetPasswordScreen.dart';
 import 'package:ImageTagging/screens/HomeScreen.dart';
 import 'package:ImageTagging/screens/SignupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LoginScreen extends StatefulWidget {
+class OTPScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _OTPScreenState createState() => _OTPScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
-
+class _OTPScreenState extends State<OTPScreen> {
   onLoginPress() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  }
-
-  onForgetPasswordPress() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ForgetPasswordScreen()));
   }
 
   final kHintTextStyle = TextStyle(
@@ -119,39 +111,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: onForgetPasswordPress,
+        onPressed: () => print('Forgot Password Button Pressed'),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Forgot Password?',
           style: kLabelStyle,
         ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
-    return Container(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
-        ],
       ),
     );
   }
@@ -283,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
+        value: SystemUiOverlayStyle.light,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
@@ -305,38 +270,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'ImageX',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 120.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'ImageX',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 30.0),
-                        _buildEmailTF(),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
-                        _buildRememberMeCheckbox(),
-                        _buildLoginBtn(),
-                        _buildSignInWithText(),
-                        _buildSocialBtnRow(),
-                        _buildSignupBtn(),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 30.0),
+                      _buildEmailTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildPasswordTF(),
+                      _buildForgotPasswordBtn(),
+                      _buildLoginBtn(),
+                      _buildSignInWithText(),
+                      _buildSocialBtnRow(),
+                      _buildSignupBtn(),
+                    ],
                   ),
                 ),
               )
