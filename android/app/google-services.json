@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "977531721460",
-    "firebase_url": "https://imagetagging-778a9.firebaseio.com",
-    "project_id": "imagetagging-778a9",
-    "storage_bucket": "imagetagging-778a9.appspot.com"
+    "project_number": "716404991125",
+    "firebase_url": "https://imagetagger-ee91a.firebaseio.com",
+    "project_id": "imagetagger-ee91a",
+    "storage_bucket": "imagetagger-ee91a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:977531721460:android:2aa824d7dacd157bafb0a1",
+        "mobilesdk_app_id": "1:716404991125:android:5fc2aefa99807eb64de79c",
         "android_client_info": {
           "package_name": "com.example.ImageTagging"
         }
       },
       "oauth_client": [
         {
-          "client_id": "977531721460-2q1gnatr354c7d7le5pc19100mfbp08h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ImageTagging",
-            "certificate_hash": "696d1806c342393895c00196c9943a242153fec5"
-          }
-        },
-        {
-          "client_id": "977531721460-f4escqjut6icf2cq2ccn566sirvgabo7.apps.googleusercontent.com",
+          "client_id": "716404991125-r8kgjr9kjf63h3m4j503eogcf576qb3f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDeG6s9aeOo26jr5bxhhXi8f6ILwbiV1sE"
+          "current_key": "AIzaSyCocWfEynNc-ryfj5UKSkHQ1h2lPGIg44M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "977531721460-f4escqjut6icf2cq2ccn566sirvgabo7.apps.googleusercontent.com",
+              "client_id": "716404991125-r8kgjr9kjf63h3m4j503eogcf576qb3f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
