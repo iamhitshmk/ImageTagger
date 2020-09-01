@@ -2,6 +2,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ImageTagging/screens/LoginScreen.dart';
+import 'package:ImageTagging/screens/SearchScreen.dart';
 // import 'package:ImageTagging/screens/home1.dart';
 // import 'package:ImageTagging/screens/HomeScreen.dart';
 // import 'package:ImageTagging/screens/splashscreen.dart';
