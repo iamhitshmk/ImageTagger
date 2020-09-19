@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:imgtag/models/post_model.dart';
 import 'package:imgtag/models/user_data.dart';
 import 'package:imgtag/services/database_service.dart';
@@ -19,20 +20,64 @@ class BlogScreen extends StatefulWidget {
 class _BlogScreenState extends State<BlogScreen> {
   File _image;
   TextEditingController _captionController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
+  TextEditingController _deviceController = TextEditingController();
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   String _caption = '';
+  String _location = '';
+  String _deviceName = '';
   bool _isLoading = false;
+  Position _currentPosition;
+  String _currentAddress;
   var device;
 
   info() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    setState(() {
+      _deviceController.text = androidInfo.model;
+    });
+    print('Running on ${androidInfo.model}');
     return androidInfo.model;
   }
 
   @override
-  initState() {
+  void initState() {
     super.initState();
-    device = info();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _deviceController.text = info();
+    });
+  }
+
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+            "${place.locality}, ${place.postalCode}, ${place.country}";
+        _locationController.text = _currentAddress;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   _showSelectImageDialog() {
@@ -107,6 +152,7 @@ class _BlogScreenState extends State<BlogScreen> {
     PickedFile imageFile = await picker.getImage(source: source);
     File file = File(imageFile.path);
     if (file != null) {
+      file = await _cropImage(file);
       setState(() {
         _image = file;
       });
@@ -143,6 +189,7 @@ class _BlogScreenState extends State<BlogScreen> {
       Post post = Post(
         imageUrl: imageUrl,
         caption: _caption,
+        location: _location,
         likes: {},
         authorId: Provider.of<UserData>(context, listen: false).currentUserId,
         timestamp: Timestamp.fromDate(DateTime.now()),
@@ -220,11 +267,41 @@ class _BlogScreenState extends State<BlogScreen> {
                     children: [
                       TextField(
                         controller: _captionController,
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 15.0),
                         decoration: InputDecoration(
                           labelText: 'Tags',
                         ),
                         onChanged: (input) => _caption = input,
+                      ),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: _deviceController,
+                        style: TextStyle(fontSize: 15.0),
+                        decoration: InputDecoration(
+                          labelText: 'Device Name',
+                        ),
+                        onChanged: (input) => _deviceName = input,
+                      ),
+                      FlatButton(
+                        child: Text("Get Device"),
+                        onPressed: () {
+                          info();
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: _locationController,
+                        style: TextStyle(fontSize: 15.0),
+                        decoration: InputDecoration(
+                          labelText: 'Location',
+                        ),
+                        onChanged: (input) => _location = input,
+                      ),
+                      FlatButton(
+                        child: Text("Get location"),
+                        onPressed: () {
+                          _getCurrentLocation();
+                        },
                       ),
                     ],
                   ),

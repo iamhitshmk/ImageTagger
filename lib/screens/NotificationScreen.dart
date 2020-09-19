@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imgtag/models/user_model.dart';
+import 'package:imgtag/services/database_service.dart';
 
 class NotificationScreen extends StatefulWidget {
   final String userId;
@@ -11,6 +12,21 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   final items = List<String>.generate(20, (i) => "Item ${i + 1}");
+  List<Map> _notificationsList = List<Map>();
+
+  @override
+  void initState() {
+    super.initState();
+    _notifications();
+  }
+
+  _notifications() async {
+    final notifications = await DatabaseService.notifications(widget.userId);
+    print(notifications);
+    setState(() {
+      _notificationsList = notifications;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

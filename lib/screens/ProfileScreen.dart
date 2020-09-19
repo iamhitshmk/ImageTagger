@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:imgtag/models/post_model.dart';
 import 'package:imgtag/models/user_data.dart';
 import 'package:imgtag/models/user_model.dart';
 import 'package:imgtag/screens/EditProfile.dart';
@@ -24,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isFollowing = false;
   int followercount = 0;
   int followingcount = 0;
+  List<Post> _posts = List<Post>();
 
   @override
   void initState() {
@@ -31,6 +33,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _setupIsFollowing();
     _setupFollowers();
     _setupFollowing();
+    _getPosts();
+  }
+
+  _getPosts() async {
+    List<Post> posts = await DatabaseService.getSelfPosts(widget.userId);
+    print(_posts);
+    setState(() {
+      _posts = posts;
+    });
   }
 
   _setupIsFollowing() async {
@@ -115,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   child: Text(
-                    'Update Profile',
+                    'Edit Profile',
                     style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,
@@ -158,6 +169,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
   }
 
+  showAlertDialog(BuildContext context) async {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Logout"),
+      onPressed: () {
+        AuthService.logout();
+        Navigator.of(context).pop();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Logout"),
+      content: Text("Would you like to logout?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +206,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.white,
         centerTitle: false,
         automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Colors.black,
+            ),
+            onPressed: () => showAlertDialog(context),
+          )
+        ],
         title: Text(
           'Profile',
           textAlign: TextAlign.left,
@@ -205,10 +255,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Expanded(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                ListTile(
-                                  title: Text(
+                                Container(
+                                  child: CircleAvatar(
+                                    radius: 50.0,
+                                    backgroundColor: Colors.grey,
+                                    backgroundImage:
+                                        user.profileImageUrl.isEmpty
+                                            ? AssetImage(
+                                                'assets/images/user.jpg',
+                                              )
+                                            : CachedNetworkImageProvider(
+                                                user.profileImageUrl),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                  child: Text(
                                     user.name,
                                     style: TextStyle(
                                       fontSize: 24.0,
@@ -216,114 +281,106 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                  subtitle: Text(
-                                    user.bio,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2
-                                        .copyWith(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  isThreeLine: true,
                                 ),
+                                user.bio != null || user.bio != ''
+                                    ? Text(
+                                        user.bio,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2
+                                            .copyWith(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    : SizedBox.shrink()
                               ],
-                            ),
-                          ),
-                          Container(
-                            child: CircleAvatar(
-                              radius: 55.0,
-                              backgroundColor: Colors.grey[350],
-                              child: CircleAvatar(
-                                radius: 50.0,
-                                backgroundColor: Colors.grey,
-                                backgroundImage: user.profileImageUrl.isEmpty
-                                    ? AssetImage(
-                                        'assets/images/user-placeholder.jpg')
-                                    : CachedNetworkImageProvider(
-                                        user.profileImageUrl),
-                              ),
                             ),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Posts',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
                                     '0',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2
                                         .copyWith(
-                                          fontSize: 14.0,
+                                          fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Followers',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                Text(
+                                  'Photos',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
                                     followercount.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2
                                         .copyWith(
-                                          fontSize: 14.0,
+                                          fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Following',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                Text(
+                                  'Followers',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
                                     followingcount.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2
                                         .copyWith(
-                                          fontSize: 14.0,
+                                          fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Text(
+                                  'Following',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -334,34 +391,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   children: <Widget>[
                     _displayButton(user),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.all(7.0),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              Color(0xff5c27fe),
-                              Color(0xffc165dd),
-                            ],
-                          ),
-                          borderRadius: BorderRadiusDirectional.circular(15.0),
-                        ),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(10.0),
-                          onPressed: AuthService.logout,
-                          child: Text(
-                            'Logout',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -369,19 +398,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        postCard(context),
-                        postCard(context),
-                        postCard(context),
-                      ],
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 0.1),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Photos',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ),
                     ),
-                    Row(
-                      children: [
-                        postCard(context),
-                        postCard(context),
-                        postCard(context),
-                      ],
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      children: _posts
+                          .map((post) => postCard(context, post))
+                          .toList(),
                     ),
                   ],
                 ),
@@ -391,25 +426,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         },
       ),
     );
-  } //widgetbuild
+  }
 
-  Widget postCard(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ImageScreen(
-                    'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg'))),
-        child: new Card(
-          color: Colors.blueAccent,
-          child: Image.network(
-            'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg',
-            height: MediaQuery.of(context).size.width / 3,
-            width: MediaQuery.of(context).size.width / 3,
-            fit: BoxFit.fill,
-          ),
-        ),
+  Widget postCard(BuildContext context, post) {
+    return GestureDetector(
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ImageScreen(post.imageUrl))),
+      child: Image.network(
+        post.imageUrl,
+        height: MediaQuery.of(context).size.width / 3,
+        width: MediaQuery.of(context).size.width / 3,
+        fit: BoxFit.fill,
       ),
     );
   }
