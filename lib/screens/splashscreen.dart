@@ -1,9 +1,8 @@
-import 'package:ImageTagging/common/custom_app_bar.dart';
-import 'package:ImageTagging/screens/Dashboard.dart';
-import 'package:ImageTagging/screens/HomeScreen.dart';
-import 'package:ImageTagging/utils/strings.dart';
-import 'package:ImageTagging/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:imgtag/common/custom_app_bar.dart';
+import 'package:imgtag/screens/HomeScreen.dart';
+import 'package:imgtag/utils/strings.dart';
+import 'package:imgtag/utils/text_styles.dart';
 
 class LandingScreen extends StatefulWidget {
   @override

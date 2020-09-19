@@ -1,12 +1,16 @@
-import 'package:ImageTagging/screens/ProfileScreen.dart';
-import 'package:ImageTagging/screens/Dashboard.dart';
-import 'package:ImageTagging/screens/SearchScreen.dart';
-import 'package:ImageTagging/screens/NotificationScreen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:imgtag/screens/ProfileScreen.dart';
+import 'package:imgtag/screens/SearchScreen.dart';
+import 'package:imgtag/screens/NotificationScreen.dart';
+import 'package:imgtag/screens/Dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String userId;
+  static final String id = 'home_screen';
+
+  HomeScreen({this.userId});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -25,7 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
-        children: <Widget>[Home1(), SearchScreen(), NotificationScreen(), ProfileScreen()],
+        children: <Widget>[
+          Home1(userId: widget.userId),
+          SearchScreen(userId: widget.userId),
+          NotificationScreen(userId: widget.userId),
+          ProfileScreen(userId: widget.userId)
+        ],
         onPageChanged: (int index) {
           setState(() {
             _currentTab = index;
@@ -86,25 +95,25 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavyBarItem(
             icon: Icon(Icons.apps),
             title: Text('Home'),
-            activeColor: Colors.red,
+            activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.search),
             title: Text('Search'),
-            activeColor: Colors.pink,
+            activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.notifications),
             title: Text('Notifications'),
-            activeColor: Colors.purpleAccent,
+            activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.person),
             title: Text('Profile'),
-            activeColor: Colors.purpleAccent,
+            activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
         ],

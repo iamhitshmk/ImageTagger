@@ -1,6 +1,6 @@
-import 'package:ImageTagging/utils/strings.dart';
-import 'package:ImageTagging/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:imgtag/utils/strings.dart';
+import 'package:imgtag/utils/text_styles.dart';
 
 class CustomAppBar extends StatelessWidget {
 

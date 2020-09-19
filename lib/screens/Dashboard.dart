@@ -1,82 +1,20 @@
 import 'dart:async';
-import 'package:ImageTagging/models/user_model.dart';
-import 'package:ImageTagging/screens/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:imgtag/models/user_model.dart';
+import 'package:imgtag/screens/Image.dart';
+import 'package:imgtag/screens/ProfileScreen.dart';
+import 'package:imgtag/screens/blog_screen.dart';
+import 'package:imgtag/services/auth_service.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-
-List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 1),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(2, 1),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 1),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(3, 1),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(4, 1),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(3, 1),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(4, 1),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(3, 1),
-  const StaggeredTile.count(1, 1),
-];
-
-List<Widget> _tiles = const <Widget>[
-  const ImageTile(Colors.green, Icons.widgets),
-  const ImageTile(Colors.lightBlue, Icons.wifi),
-  const ImageTile(Colors.amber, Icons.panorama_wide_angle),
-  const ImageTile(Colors.indigo, Icons.airline_seat_flat),
-  const ImageTile(Colors.green, Icons.widgets),
-  const ImageTile(Colors.lightBlue, Icons.wifi),
-  const ImageTile(Colors.amber, Icons.panorama_wide_angle),
-  const ImageTile(Colors.indigo, Icons.airline_seat_flat),
-  const ImageTile(Colors.red, Icons.bluetooth),
-  const ImageTile(Colors.pink, Icons.battery_alert),
-  const ImageTile(Colors.purple, Icons.desktop_windows),
-  const ImageTile(Colors.blue, Icons.radio),
-  const ImageTile(Colors.brown, Icons.map),
-  const ImageTile(Colors.deepOrange, Icons.send),
-  const ImageTile(Colors.indigo, Icons.airline_seat_flat),
-  const ImageTile(Colors.red, Icons.bluetooth),
-  const ImageTile(Colors.pink, Icons.battery_alert),
-  const ImageTile(Colors.purple, Icons.desktop_windows),
-  const ImageTile(Colors.blue, Icons.radio),
-  const ImageTile(Colors.red, Icons.bluetooth),
-  const ImageTile(Colors.pink, Icons.battery_alert),
-  const ImageTile(Colors.purple, Icons.desktop_windows),
-  const ImageTile(Colors.blue, Icons.radio),
-  const ImageTile(Colors.brown, Icons.map),
-  const ImageTile(Colors.deepOrange, Icons.send),
-  const ImageTile(Colors.indigo, Icons.airline_seat_flat),
-  const ImageTile(Colors.red, Icons.bluetooth),
-  const ImageTile(Colors.pink, Icons.battery_alert),
-  const ImageTile(Colors.purple, Icons.desktop_windows),
-  const ImageTile(Colors.blue, Icons.radio),
-];
 
 class Home1 extends StatefulWidget {
   static final String id = "home1";
+  final String userId;
   final User user;
-  Home1({this.user});
+  Home1({this.user, this.userId});
   @override
   _Home1State createState() => new _Home1State();
 }
@@ -85,6 +23,58 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
   AnimationController _hideFabAnimation;
+
+  List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+    const StaggeredTile.count(2, 2),
+    const StaggeredTile.count(2, 1),
+    const StaggeredTile.count(1, 2),
+    const StaggeredTile.count(1, 1),
+    const StaggeredTile.count(2, 2),
+    const StaggeredTile.count(1, 2),
+    const StaggeredTile.count(1, 1),
+    const StaggeredTile.count(2, 2),
+    const StaggeredTile.count(2, 1),
+    const StaggeredTile.count(1, 2),
+    const StaggeredTile.count(1, 1),
+    const StaggeredTile.count(2, 2),
+    const StaggeredTile.count(1, 2),
+    const StaggeredTile.count(1, 1),
+  ];
+
+  List<Widget> _tiles = const <Widget>[
+    const ImageTile(Colors.green,
+        "https://static.toiimg.com/photo/73173811.cms"),
+    const ImageTile(Colors.lightBlue,
+        "https://papers.co/wallpaper/papers.co-nh93-mountain-sky-river-nature-scenery-summer-flare-8-wallpaper.jpg"),
+    const ImageTile(Colors.amber,
+        "https://i.pinimg.com/originals/8a/42/04/8a42043b7d18ca343faa4cea47f5f3ac.jpg"),
+    const ImageTile(Colors.indigo,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.indigo,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+    const ImageTile(Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+  ];
 
   @override
   initState() {
@@ -125,7 +115,7 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
     return false;
   }
 
-Widget buildGridView() {
+  Widget buildGridView() {
     return GridView.count(
       crossAxisCount: 3,
       children: List.generate(images.length, (index) {
@@ -177,8 +167,7 @@ Widget buildGridView() {
           backgroundColor: Colors.white,
           centerTitle: true,
           leading: GestureDetector(
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfileScreen())),
+            onTap: AuthService.logout,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
@@ -193,9 +182,9 @@ Widget buildGridView() {
           ),
           elevation: 1,
           title: Text(
-            'ImageX',
+            'Photified',
             style: TextStyle(
-              color: Colors.purple,
+              color: Colors.black87,
               fontSize: 20.0,
               fontFamily: 'Billabong',
             ),
@@ -247,7 +236,10 @@ Widget buildGridView() {
         floatingActionButton: ScaleTransition(
           scale: _hideFabAnimation,
           child: FloatingActionButton(
-              onPressed: () => loadAssets(), child: Icon(Icons.add_a_photo)),
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BlogScreen())),
+            child: Icon(Icons.add_a_photo),
+          ),
         ),
       ),
     );
@@ -258,22 +250,20 @@ class ImageTile extends StatelessWidget {
   const ImageTile(this.backgroundColor, this.iconData);
 
   final Color backgroundColor;
-  final IconData iconData;
+  final String iconData;
 
   @override
   Widget build(BuildContext context) {
-    return new Card(
-      color: backgroundColor,
-      child: new InkWell(
-        onTap: () {},
-        child: new Center(
-          child: new Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: new Icon(
-              iconData,
-              color: Colors.white,
-            ),
-          ),
+    return GestureDetector(
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ImageScreen(this.iconData))),
+      child: new Card(
+        color: backgroundColor,
+        child: Image.network(
+          '$iconData',
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
         ),
       ),
     );

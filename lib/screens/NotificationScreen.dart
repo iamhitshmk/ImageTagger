@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ImageTagging/models/user_model.dart';
+import 'package:imgtag/models/user_model.dart';
 
 class NotificationScreen extends StatefulWidget {
+  final String userId;
   final User user;
-  NotificationScreen({this.user});
+  NotificationScreen({this.user, this.userId});
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }

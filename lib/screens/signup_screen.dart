@@ -1,21 +1,24 @@
-import 'package:ImageTagging/screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ImageTagging/screens/HomeScreen.dart';
+import 'package:imgtag/screens/LoginScreen.dart';
+import 'package:imgtag/services/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
+  static final String id = 'signup_screen';
+
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  String _name, _email, _password, _phone;
 
-  onSignupPress() {
+  _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      // Logging in the user w/ Firebase
+      AuthService.signUpUser(context, _name, _email, _phone, _password);
     }
   }
 
@@ -31,7 +34,8 @@ class _SignupScreenState extends State<SignupScreen> {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Color(0xFF6CA8F1),
+    color: Colors.transparent,
+    border: Border.all(width: 0.2),
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(
@@ -56,6 +60,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            onChanged: (input) => _email = input,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -91,6 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            onChanged: (input) => _phone = input,
             keyboardType: TextInputType.number,
             style: TextStyle(
               color: Colors.white,
@@ -126,6 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            onChanged: (input) => _name = input,
             keyboardType: TextInputType.text,
             style: TextStyle(
               color: Colors.white,
@@ -161,6 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            onChanged: (input) => _password = input,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -188,7 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: onSignupPress,
+        onPressed: _submit,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -197,7 +205,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Text(
           'SIGNUP',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Color(0xffc165dd),
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -212,7 +220,11 @@ class _SignupScreenState extends State<SignupScreen> {
     return GestureDetector(
       onTap: () => {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()))
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        )
       },
       child: RichText(
         text: TextSpan(
@@ -256,12 +268,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Color(0xff5c27fe),
+                      Color(0xffc165dd),
                     ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
                   ),
                 ),
               ),
@@ -271,36 +280,39 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'ImageX',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Photified',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildNameTF(),
-                        SizedBox(height: 30.0),
-                        _buildEmailTF(),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildPhoneTF(),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildPasswordTF(),
-                        _buildSignupBtn(),
-                        _buildLoginBtn()
-                      ],
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildNameTF(),
+                          SizedBox(height: 30.0),
+                          _buildEmailTF(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPhoneTF(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPasswordTF(),
+                          _buildSignupBtn(),
+                          _buildLoginBtn()
+                        ],
+                      ),
                     ),
                   ),
                 ),

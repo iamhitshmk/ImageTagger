@@ -1,25 +1,26 @@
-import 'package:ImageTagging/screens/ForgetPasswordScreen.dart';
-import 'package:ImageTagging/screens/HomeScreen.dart';
-import 'package:ImageTagging/screens/SignupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:imgtag/screens/signup_screen.dart';
+import 'package:imgtag/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
+  static final String id = 'login_screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
+  final _formKey = GlobalKey<FormState>();
+  String _email, _password;
 
-  onLoginPress() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  }
-
-  onForgetPasswordPress() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ForgetPasswordScreen()));
+  _submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      // Logging in the user w/ Firebase
+      AuthService.login(_email, _password);
+    }
   }
 
   final kHintTextStyle = TextStyle(
@@ -34,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Color(0xFF6CA8F1),
+    color: Colors.transparent,
+    border: Border.all(width: 0.2),
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(
@@ -45,12 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
     ],
   );
 
-  Widget _buildEmailTF() {
+  Widget _buildEmailTF(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Email',
+          'Email or Phone',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -64,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
+            onChanged: (input) => _email = input,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
@@ -80,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordTF() {
+  Widget _buildPasswordTF(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -99,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
+            onChanged: (input) => _password = input,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
@@ -115,21 +119,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: onForgetPasswordPress,
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
+  // Widget _buildForgotPasswordBtn(BuildContext context) {
+  //   return Container(
+  //     alignment: Alignment.centerRight,
+  //     child: FlatButton(
+  //       onPressed: openAlertBox(context),
+  //       padding: EdgeInsets.only(right: 0.0),
+  //       child: Text(
+  //         'Forgot Password?',
+  //         style: kLabelStyle,
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildRememberMeCheckbox() {
+  Widget _buildRememberMeCheckbox(BuildContext context) {
     return Container(
       height: 20.0,
       child: Row(
@@ -156,13 +160,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoginBtn() {
+  Widget _buildLoginBtn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: onLoginPress,
+        onPressed: _submit,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -171,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Color(0xffc165dd),
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -182,73 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInWithText() {
-    return Column(
-      children: <Widget>[
-        Text(
-          '- OR -',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          'Sign in with',
-          style: kLabelStyle,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Facebook'),
-            AssetImage(
-              'assets/icon/facebook.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('Login with Google'),
-            AssetImage(
-              'assets/icon/google.jpg',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
+  Widget _buildSignupBtn(BuildContext context) {
     return GestureDetector(
       onTap: () => {
         Navigator.push(
@@ -296,12 +234,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Color(0xff5c27fe),
+                      Color(0xffc165dd),
                     ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
                   ),
                 ),
               ),
@@ -311,31 +246,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'ImageX',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Photified',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 30.0),
-                        _buildEmailTF(),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
-                        _buildRememberMeCheckbox(),
-                        _buildLoginBtn(),
-                        _buildSignInWithText(),
-                        _buildSocialBtnRow(),
-                        _buildSignupBtn(),
-                      ],
+                          SizedBox(height: 30.0),
+                          _buildEmailTF(context),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPasswordTF(context),
+                          // _buildForgotPasswordBtn(context),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _buildRememberMeCheckbox(context),
+                          _buildLoginBtn(context),
+                          _buildSignupBtn(context),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -347,3 +286,52 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+// openAlertBox(BuildContext context) {
+//   String email;
+//   return showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.all(
+//             Radius.circular(32.0),
+//           ),
+//         ),
+//         contentPadding: EdgeInsets.all(10.0),
+//         title: Text('Enter Registered Email Address'),
+//         content: Padding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: 10.0,
+//           ),
+//           child: TextFormField(
+//             decoration: InputDecoration(labelText: 'Email'),
+//             onChanged: (input) => email = input,
+//           ),
+//         ),
+//         actions: <Widget>[
+//           FlatButton(
+//             onPressed: () {
+//               if (email.isNotEmpty || email == null) {
+//                 Navigator.pop(context);
+//                 Fluttertoast.showToast(
+//                   msg: "Reset Link has been sent to $email",
+//                   toastLength: Toast.LENGTH_SHORT,
+//                   backgroundColor: Color(0xffd9d9d9),
+//                 );
+//                 AuthService.sendPasswordResetEmail(email);
+//               }
+//             },
+//             child: Text(
+//               'Send',
+//               style: TextStyle(
+//                 color: Colors.blue,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
