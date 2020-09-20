@@ -22,11 +22,42 @@ class DatabaseService {
   static void createPost(Post post) {
     postsRef.document(post.authorId).collection('usersPosts').add({
       'imageUrl': post.imageUrl,
-      'caption': post.caption,
+      'tags': post.tags,
       'likes': post.likes,
       'authorId': post.authorId,
       'timestamp': post.timestamp,
+      'device': post.device,
+      'location': post.location
     });
+  }
+
+  static void likePost(
+      String currentUserId, String postId, bool likeStatus) async {
+    DocumentSnapshot likePost = await likesRef
+        .document(currentUserId)
+        .collection('postLike')
+        .document(postId)
+        .get();
+
+    if (likePost.exists != true) {
+      likesRef
+          .document(currentUserId)
+          .collection('postLike')
+          .document(postId)
+          .updateData({
+        "like": likeStatus,
+        'timestamp': DateTime.now(),
+      });
+    } else {
+      likesRef
+          .document(currentUserId)
+          .collection('postLike')
+          .document(postId)
+          .setData({
+        "like": likeStatus,
+        'timestamp': DateTime.now(),
+      });
+    }
   }
 
   static void followUser({String currentUserId, String userId}) {

@@ -19,12 +19,12 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   File _image;
-  TextEditingController _captionController = TextEditingController();
+  TextEditingController _tagsController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _deviceController = TextEditingController();
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  String _caption = '';
+  String _tags = '';
   String _location = '';
   String _deviceName = '';
   bool _isLoading = false;
@@ -179,7 +179,7 @@ class _BlogScreenState extends State<BlogScreen> {
 //}
 
   _submit() async {
-    if (!_isLoading && _image != null && _caption.isNotEmpty) {
+    if (!_isLoading && _image != null && _tags.isNotEmpty) {
       setState(() {
         _isLoading = true;
       });
@@ -188,18 +188,19 @@ class _BlogScreenState extends State<BlogScreen> {
       String imageUrl = await StorageService.uploadPost(_image);
       Post post = Post(
         imageUrl: imageUrl,
-        caption: _caption,
-        location: _location,
-        likes: {},
+        tags: _tags,
+        location: _locationController.text,
+        device: _deviceController.text,
+        likes: 0,
         authorId: Provider.of<UserData>(context, listen: false).currentUserId,
         timestamp: Timestamp.fromDate(DateTime.now()),
       );
       DatabaseService.createPost(post);
       //Reset data
-      _captionController.clear();
+      _tagsController.clear();
 
       setState(() {
-        _caption = '';
+        _tags = '';
         _image = null;
         _isLoading = false;
       });
@@ -266,12 +267,12 @@ class _BlogScreenState extends State<BlogScreen> {
                   child: Column(
                     children: [
                       TextField(
-                        controller: _captionController,
+                        controller: _tagsController,
                         style: TextStyle(fontSize: 15.0),
                         decoration: InputDecoration(
-                          labelText: 'Tags',
+                          labelText: 'Tags Eg. birthday, party, etc.',
                         ),
-                        onChanged: (input) => _caption = input,
+                        onChanged: (input) => _tags = input,
                       ),
                       SizedBox(height: 15),
                       TextField(

@@ -23,6 +23,23 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
   AnimationController _hideFabAnimation;
+  var currentUserId;
+  var list1 = {'name': "Moin Ghadiyali"};
+
+  @override
+  initState() {
+    super.initState();
+    _hideFabAnimation =
+        AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _hideFabAnimation.forward();
+    currentUserId = widget.userId;
+  }
+
+  @override
+  void dispose() {
+    _hideFabAnimation.dispose();
+    super.dispose();
+  }
 
   List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
     const StaggeredTile.count(2, 2),
@@ -43,52 +60,150 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
 
   List<Widget> _tiles = const <Widget>[
     const ImageTile(
-        Colors.green, "https://static.toiimg.com/photo/73173811.cms"),
-    const ImageTile(Colors.lightBlue,
-        "https://papers.co/wallpaper/papers.co-nh93-mountain-sky-river-nature-scenery-summer-flare-8-wallpaper.jpg"),
-    const ImageTile(Colors.amber,
-        "https://i.pinimg.com/originals/8a/42/04/8a42043b7d18ca343faa4cea47f5f3ac.jpg"),
-    const ImageTile(Colors.indigo,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.green,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.lightBlue,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.amber,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.amber,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.green,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.lightBlue,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.amber,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.indigo,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.green,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.lightBlue,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.amber,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
-    const ImageTile(Colors.amber,
-        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg"),
+        Colors.green,
+        "https://static.toiimg.com/photo/73173811.cms",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.lightBlue,
+        "https://papers.co/wallpaper/papers.co-nh93-mountain-sky-river-nature-scenery-summer-flare-8-wallpaper.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://i.pinimg.com/originals/8a/42/04/8a42043b7d18ca343faa4cea47f5f3ac.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.indigo,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.indigo,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.green,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.lightBlue,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
+    const ImageTile(
+        Colors.amber,
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-5-1589546097.jpg",
+        "Moin Ghadiyali",
+        "Mumbra",
+        "Monday, 12th September, 2020",
+        "farewell",
+        "college",
+        "Nokia 6.1 Plus"),
   ];
-
-  @override
-  initState() {
-    super.initState();
-    _hideFabAnimation =
-        AnimationController(vsync: this, duration: kThemeAnimationDuration);
-    _hideFabAnimation.forward();
-  }
-
-  @override
-  void dispose() {
-    _hideFabAnimation.dispose();
-    super.dispose();
-  }
 
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification.depth == 0) {
@@ -262,16 +377,33 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
 }
 
 class ImageTile extends StatelessWidget {
-  const ImageTile(this.backgroundColor, this.iconData);
+  const ImageTile(this.backgroundColor, this.iconData, this.name, this.location,
+      this.date, this.tag1, this.tag2, this.device);
 
   final Color backgroundColor;
   final String iconData;
+  final String name;
+  final String location;
+  final String date;
+  final String tag1;
+  final String tag2;
+  final String device;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ImageScreen(this.iconData))),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ImageScreen(
+                    this.iconData,
+                    this.name,
+                    this.location,
+                    this.date,
+                    this.tag1,
+                    this.tag2,
+                    this.device,
+                  ))),
       child: new Card(
         color: backgroundColor,
         child: Image.network(

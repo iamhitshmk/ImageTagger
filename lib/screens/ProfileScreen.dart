@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int followercount = 0;
   int followingcount = 0;
   List<Post> _posts = List<Post>();
+  User userObj;
 
   @override
   void initState() {
@@ -236,6 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }
           User user = User.fromDoc(snapshot.data);
+          userObj = user;
 
           return ListView(
             children: <Widget>[
@@ -415,9 +417,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.start,
                       direction: Axis.horizontal,
-                      children: _posts
-                          .map((post) => postCard(context, post))
-                          .toList(),
+                      children: _posts.length == 0
+                          ? SizedBox.shrink()
+                          : _posts
+                              .map((post) => postCard(context, post))
+                              .toList(),
                     ),
                   ],
                 ),
@@ -431,8 +435,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget postCard(BuildContext context, post) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ImageScreen(post.imageUrl))),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ImageScreen(
+                    post.imageUrl,
+                    userObj.name,
+                    post.location,
+                    post.timestamp.toString(),
+                    post.tags.split(",")[0],
+                    post.tags.split(',')[1],
+                    post.device,
+                  ))),
       child: Image.network(
         post.imageUrl,
         height: MediaQuery.of(context).size.width / 3,
