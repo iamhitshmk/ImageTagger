@@ -22,7 +22,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File _profileImage;
   String _name = '';
   String _bio = '';
-  bool _private = false;
   bool _isLoading = false;
 
   @override
@@ -30,7 +29,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
     _name = widget.user.name;
     _bio = widget.user.bio;
-    _private = widget.user.private;
   }
 
   _cropImage(File imageFile) async {
@@ -95,7 +93,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         name: _name,
         profileImageUrl: _profileImageUrl,
         bio: _bio,
-        private: _private
       );
       // database update
       DatabaseService.updateUser(user);
@@ -151,21 +148,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    child: Switch(
-                      value: _private,
-                      onChanged: (value) {
-                        setState(() {
-                          _private = value;
-                          print(_private);
-                        });
-                      },
-                      activeTrackColor: Colors.lightGreenAccent,
-                      activeColor: Colors.green,
                     ),
                   ),
                   TextFormField(

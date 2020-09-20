@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:imgtag/screens/signup_screen.dart';
 import 'package:imgtag/services/auth_service.dart';
@@ -120,19 +119,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: openAlertBox(context),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
+  // Widget _buildForgotPasswordBtn(BuildContext context) {
+  //   return Container(
+  //     alignment: Alignment.centerRight,
+  //     child: FlatButton(
+  //       onPressed: openAlertBox(context),
+  //       padding: EdgeInsets.only(right: 0.0),
+  //       child: Text(
+  //         'Forgot Password?',
+  //         style: kLabelStyle,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildRememberMeCheckbox(BuildContext context) {
     return Container(
@@ -267,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 30.0,
                           ),
                           _buildPasswordTF(context),
-                          _buildForgotPasswordBtn(context),
+                          // _buildForgotPasswordBtn(context),
                           SizedBox(
                             height: 20,
                           ),
@@ -288,51 +287,51 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-openAlertBox(BuildContext context) {
-  String email;
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(32.0),
-          ),
-        ),
-        contentPadding: EdgeInsets.all(10.0),
-        title: Text('Enter Registered Email Address'),
-        content: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.0,
-          ),
-          child: TextFormField(
-            decoration: InputDecoration(labelText: 'Email'),
-            onChanged: (input) => email = input,
-          ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () {
-              if (email.isNotEmpty || email == null) {
-                Navigator.pop(context);
-                Fluttertoast.showToast(
-                  msg: "Reset Link has been sent to $email",
-                  toastLength: Toast.LENGTH_SHORT,
-                  backgroundColor: Color(0xffd9d9d9),
-                );
-                AuthService.sendPasswordResetEmail(email);
-              }
-            },
-            child: Text(
-              'Send',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      );
-    },
-  );
-}
+// openAlertBox(BuildContext context) {
+//   String email;
+//   return showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.all(
+//             Radius.circular(32.0),
+//           ),
+//         ),
+//         contentPadding: EdgeInsets.all(10.0),
+//         title: Text('Enter Registered Email Address'),
+//         content: Padding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: 10.0,
+//           ),
+//           child: TextFormField(
+//             decoration: InputDecoration(labelText: 'Email'),
+//             onChanged: (input) => email = input,
+//           ),
+//         ),
+//         actions: <Widget>[
+//           FlatButton(
+//             onPressed: () {
+//               if (email.isNotEmpty || email == null) {
+//                 Navigator.pop(context);
+//                 Fluttertoast.showToast(
+//                   msg: "Reset Link has been sent to $email",
+//                   toastLength: Toast.LENGTH_SHORT,
+//                   backgroundColor: Color(0xffd9d9d9),
+//                 );
+//                 AuthService.sendPasswordResetEmail(email);
+//               }
+//             },
+//             child: Text(
+//               'Send',
+//               style: TextStyle(
+//                 color: Colors.blue,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }

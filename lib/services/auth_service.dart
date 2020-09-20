@@ -23,7 +23,6 @@ class AuthService {
           'email': email,
           'phone': phone,
           'profileImageUrl': '',
-          'private': false
         });
         Navigator.pop(context);
       }

@@ -9,7 +9,6 @@ class DatabaseService {
       'name': user.name,
       'profileImageUrl': user.profileImageUrl,
       'bio': user.bio,
-      'private': user.private
     });
   }
 
