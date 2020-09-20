@@ -218,6 +218,7 @@ class _BlogScreenState extends State<BlogScreen> {
           'Create Post',
           style: TextStyle(
             color: Colors.black,
+            fontFamily: 'PTSerif',
           ),
         ),
         actions: <Widget>[
@@ -268,7 +269,10 @@ class _BlogScreenState extends State<BlogScreen> {
                     children: [
                       TextField(
                         controller: _tagsController,
-                        style: TextStyle(fontSize: 15.0),
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: 'PTSerif',
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Tags Eg. birthday, party, etc.',
                         ),
@@ -277,14 +281,25 @@ class _BlogScreenState extends State<BlogScreen> {
                       SizedBox(height: 15),
                       TextField(
                         controller: _deviceController,
-                        style: TextStyle(fontSize: 15.0),
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: 'PTSerif',
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Device Name',
+                          labelStyle: TextStyle(
+                            fontFamily: 'PTSerif',
+                          )
                         ),
                         onChanged: (input) => _deviceName = input,
                       ),
                       FlatButton(
-                        child: Text("Get Device"),
+                        child: Text(
+                          "Get Device",
+                          style: TextStyle(
+                            fontFamily: 'PTSerif',
+                          ),
+                        ),
                         onPressed: () {
                           info();
                         },
@@ -295,11 +310,19 @@ class _BlogScreenState extends State<BlogScreen> {
                         style: TextStyle(fontSize: 15.0),
                         decoration: InputDecoration(
                           labelText: 'Location',
+                          labelStyle: TextStyle(
+                            fontFamily: 'PTSerif',
+                          )
                         ),
                         onChanged: (input) => _location = input,
                       ),
                       FlatButton(
-                        child: Text("Get location"),
+                        child: Text(
+                          "Get location",
+                          style: TextStyle(
+                            fontFamily: 'PTSerif',
+                          ),
+                        ),
                         onPressed: () {
                           _getCurrentLocation();
                         },

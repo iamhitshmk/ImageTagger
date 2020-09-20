@@ -41,7 +41,7 @@ class _ImageScreenState extends State<ImageScreen> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 20.0,
-              fontFamily: 'Billabong',
+              fontFamily: 'PTSerif',
             ),
           ),
         ),
@@ -64,7 +64,10 @@ class _ImageScreenState extends State<ImageScreen> {
                       child: Text(
                         "Uploaded by: ${widget.name}",
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'PTSerif',
+                        ),
                       ),
                     ),
                     Padding(
@@ -108,7 +111,10 @@ class _ImageScreenState extends State<ImageScreen> {
                   child: Text(
                     "Uploaded on: ${widget.date}",
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'PTSerif',
+                    ),
                   ),
                 ),
               ),
@@ -119,7 +125,10 @@ class _ImageScreenState extends State<ImageScreen> {
                   child: Text(
                     "Location: ${widget.location}",
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'PTSerif',
+                    ),
                   ),
                 ),
               ),
@@ -130,7 +139,10 @@ class _ImageScreenState extends State<ImageScreen> {
                     Text(
                       "Tags: ",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'PTSerif',
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
@@ -150,7 +162,10 @@ class _ImageScreenState extends State<ImageScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Text('${widget.tag1}',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'PTSerif',
+                              )),
                         ),
                       ),
                     ),
@@ -172,7 +187,10 @@ class _ImageScreenState extends State<ImageScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Text('${widget.tag2}',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'PTSerif',
+                              )),
                         ),
                       ),
                     ),
@@ -187,7 +205,10 @@ class _ImageScreenState extends State<ImageScreen> {
                       child: Text(
                         "Device: ${widget.device}",
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'PTSerif',
+                        ),
                       ),
                     ),
                   ],

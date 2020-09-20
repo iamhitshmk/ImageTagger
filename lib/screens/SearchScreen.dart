@@ -26,7 +26,10 @@ class _SearchScreenState extends State<SearchScreen> {
             ? AssetImage('assets/images/user-placeholder.jpg')
             : CachedNetworkImageProvider(user.profileImageUrl),
       ),
-      title: Text(user.name),
+      title: Text(user.name,
+          style: TextStyle(
+            fontFamily: 'PTSerif',
+          )),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -55,10 +58,16 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.white,
         title: TextField(
           controller: _searchController,
+          style: TextStyle(
+            fontFamily: 'PTSerif',
+          ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 15.0),
             border: InputBorder.none,
             hintText: 'Search',
+            hintStyle: TextStyle(
+              fontFamily: 'PTSerif',
+            ),
             prefixIcon: Icon(
               Icons.search,
               size: 30.0,
@@ -83,7 +92,12 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _users == null
           ? Center(
-              child: Text('Search for a user'),
+              child: Text(
+                'Search for a user',
+                style: TextStyle(
+                  fontFamily: 'PTSerif',
+                ),
+              ),
             )
           : FutureBuilder(
               future: _users,
@@ -95,7 +109,12 @@ class _SearchScreenState extends State<SearchScreen> {
                 }
                 if (snapshot.data.documents.length == 0) {
                   return Center(
-                    child: Text('No users found! Please try again.'),
+                    child: Text(
+                      'No users found! Please try again.',
+                      style: TextStyle(
+                        fontFamily: 'PTSerif',
+                      ),
+                    ),
                   );
                 }
                 return ListView.builder(

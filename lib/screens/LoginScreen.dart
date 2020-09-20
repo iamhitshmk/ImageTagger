@@ -25,13 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final kHintTextStyle = TextStyle(
     color: Colors.white54,
-    fontFamily: 'OpenSans',
+    fontFamily: 'PTSerif',
   );
 
   final kLabelStyle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontFamily: 'OpenSans',
+    fontFamily: 'PTSerif',
   );
 
   final kBoxDecorationStyle = BoxDecoration(
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             onChanged: (input) => _email = input,
             decoration: InputDecoration(
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             onChanged: (input) => _password = input,
             decoration: InputDecoration(
@@ -185,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.white,
+              fontFamily: 'PTSerif',
             ),
             textAlign: TextAlign.center,
           ),
@@ -208,6 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w400,
+                fontFamily: 'PTSerif',
               ),
             ),
             TextSpan(
@@ -216,6 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'PTSerif',
               ),
             ),
           ],
@@ -262,9 +265,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Photified',
                             style: TextStyle(
                               color: Colors.black,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 45.0,
+                              fontFamily: 'DancingScript',
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                           SizedBox(height: 30.0),

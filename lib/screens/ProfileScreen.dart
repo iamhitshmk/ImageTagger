@@ -132,6 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,
+                      fontFamily: 'PTSerif',
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -173,13 +174,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   showAlertDialog(BuildContext context) async {
     Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
+      child: Text("Cancel",
+          style: TextStyle(
+            fontFamily: 'PTSerif',
+          )),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Logout"),
+      child: Text("Logout",
+          style: TextStyle(
+            fontFamily: 'PTSerif',
+          )),
       onPressed: () {
         AuthService.logout();
         Navigator.of(context).pop();
@@ -187,7 +194,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
     AlertDialog alert = AlertDialog(
       title: Text("Logout"),
-      content: Text("Would you like to logout?"),
+      content: Text("Would you like to logout?",
+          style: TextStyle(
+            fontFamily: 'PTSerif',
+          )),
       actions: [
         cancelButton,
         continueButton,
@@ -223,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20.0,
-            fontFamily: 'Billabong',
+            fontFamily: 'PTSerif',
           ),
         ),
       ),
@@ -281,6 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     style: TextStyle(
                                       fontSize: 24.0,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: 'PTSerif',
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -294,6 +305,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             .copyWith(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.normal,
+                                              fontFamily: 'PTSerif',
                                             ),
                                         textAlign: TextAlign.center,
                                       )
@@ -318,6 +330,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .copyWith(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
+                                          fontFamily: 'PTSerif',
                                         ),
                                   ),
                                 ),
@@ -326,6 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'PTSerif',
                                   ),
                                 ),
                               ],
@@ -344,6 +358,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .copyWith(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
+                                          fontFamily: 'PTSerif',
                                         ),
                                   ),
                                 ),
@@ -351,6 +366,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   'Followers',
                                   style: TextStyle(
                                     fontSize: 14.0,
+                                    fontFamily: 'PTSerif',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -370,6 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .copyWith(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.normal,
+                                          fontFamily: 'PTSerif',
                                         ),
                                   ),
                                 ),
@@ -377,6 +394,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   'Following',
                                   style: TextStyle(
                                     fontSize: 14.0,
+                                    fontFamily: 'PTSerif',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -410,19 +428,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Center(
                         child: Text(
                           'Photos',
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'PTSerif',
+                          ),
                         ),
                       ),
                     ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      children: _posts.length == 0
-                          ? SizedBox.shrink()
-                          : _posts
-                              .map((post) => postCard(context, post))
-                              .toList(),
-                    ),
+                    _posts.length == 0
+                        ? Container(
+                            height: 200,
+                            child: Center(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.event_note,
+                                  size: 50,
+                                  color: Colors.deepPurple[300],
+                                ),
+                                Text(
+                                  'No Posts',
+                                  style: TextStyle(
+                                    fontFamily: 'PTSerif',
+                                  ),
+                                ),
+                              ],
+                            )),
+                          )
+                        : Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            children: _posts
+                                .map((post) => postCard(context, post))
+                                .toList(),
+                          ),
                   ],
                 ),
               ),

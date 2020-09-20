@@ -91,12 +91,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
 
       User user = User(
-        id: widget.user.id,
-        name: _name,
-        profileImageUrl: _profileImageUrl,
-        bio: _bio,
-        private: _private
-      );
+          id: widget.user.id,
+          name: _name,
+          profileImageUrl: _profileImageUrl,
+          bio: _bio,
+          private: _private);
       // database update
       DatabaseService.updateUser(user);
 
@@ -112,7 +111,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         backgroundColor: Colors.white,
         title: Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'PTSerif',
+          ),
         ),
       ),
       body: GestureDetector(
@@ -127,90 +129,116 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       valueColor: AlwaysStoppedAnimation(Colors.blue),
                     )
                   : SizedBox.shrink(),
-              ListView(
-                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                children: <Widget>[
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 60.0,
-                          backgroundColor: Colors.grey,
-                          backgroundImage: _displayProfileImage(),
-                        ),
-                        FlatButton(
-                          onPressed: _handleImageFromGallery,
-                          child: Text(
-                            'Change Profile Image',
-                            style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                              fontSize: 16.0,
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 60.0,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: _displayProfileImage(),
+                          ),
+                          FlatButton(
+                            onPressed: _handleImageFromGallery,
+                            child: Text(
+                              'Change Profile Image',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 16.0,
+                                fontFamily: 'PTSerif',
+                              ),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Private',
+                            style: TextStyle(
+                              fontFamily: 'PTSerif',
+                            )),
+                        Container(
+                          child: Switch(
+                            value: _private,
+                            onChanged: (value) {
+                              setState(() {
+                                _private = value;
+                              });
+                            },
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Switch(
-                    value: _private,
-                    onChanged: (value) {
-                      setState(() {
-                        _private = value;
-                      });
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: _name,
-                    style: TextStyle(fontSize: 18.0),
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.person, size: 30.0),
-                      labelText: 'Name',
-                    ),
-                    validator: (input) => input.trim().length < 1
-                        ? 'Please enter a valid name'
-                        : null,
-                    onSaved: (input) => _name = input,
-                  ),
-                  TextFormField(
-                    initialValue: _bio,
-                    style: TextStyle(fontSize: 18.0),
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.book, size: 30.0),
-                      labelText: 'Bio',
-                    ),
-                    validator: (input) => input.trim().length > 150
-                        ? 'Please enter a bio less than 150 characters'
-                        : null,
-                    onSaved: (input) => _bio = input,
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(40.0),
-                    height: 40.0,
-                    width: 250.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Colors.deepPurple[300],
-                          Colors.indigo[300],
-                          Colors.cyan[100]
-                        ],
+                    TextFormField(
+                      initialValue: _name,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'PTSerif',
                       ),
-                      borderRadius: BorderRadiusDirectional.circular(50.0),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.person, size: 30.0),
+                          labelText: 'Name',
+                          labelStyle: TextStyle(
+                            fontFamily: 'PTSerif',
+                          )),
+                      validator: (input) => input.trim().length < 1
+                          ? 'Please enter a valid name'
+                          : null,
+                      onSaved: (input) => _name = input,
                     ),
-                    child: FlatButton(
-                      onPressed: _submit,
-                      textColor: Colors.white,
-                      child: Text(
-                        'Save Profile',
-                        style: TextStyle(fontSize: 18.0),
+                    TextFormField(
+                      initialValue: _bio,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'PTSerif',
                       ),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.book, size: 30.0),
+                          labelText: 'Bio',
+                          labelStyle: TextStyle(
+                            fontFamily: 'PTSerif',
+                          )),
+                      validator: (input) => input.trim().length > 150
+                          ? 'Please enter a bio less than 150 characters'
+                          : null,
+                      onSaved: (input) => _bio = input,
                     ),
-                  )
-                ],
+                    Container(
+                      margin: EdgeInsets.all(40.0),
+                      height: 40.0,
+                      width: 250.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Colors.deepPurple[300],
+                            Colors.indigo[300],
+                            Colors.cyan[100]
+                          ],
+                        ),
+                        borderRadius: BorderRadiusDirectional.circular(50.0),
+                      ),
+                      child: FlatButton(
+                        onPressed: _submit,
+                        textColor: Colors.white,
+                        child: Text(
+                          'Save Profile',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontFamily: 'PTSerif',
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

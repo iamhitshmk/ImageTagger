@@ -24,13 +24,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final kHintTextStyle = TextStyle(
     color: Colors.white54,
-    fontFamily: 'OpenSans',
+    fontFamily: 'PTSerif',
   );
 
   final kLabelStyle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontFamily: 'OpenSans',
+    fontFamily: 'PTSerif',
   );
 
   final kBoxDecorationStyle = BoxDecoration(
@@ -64,7 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -100,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
             keyboardType: TextInputType.number,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -136,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
             keyboardType: TextInputType.text,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -172,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'PTSerif',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -215,6 +215,7 @@ class _SignupScreenState extends State<SignupScreen> {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.white,
+              fontFamily: 'PTSerif',
             ),
             textAlign: TextAlign.center,
           ),
@@ -242,6 +243,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w400,
+                fontFamily: 'PTSerif',
               ),
             ),
             TextSpan(
@@ -250,6 +252,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'PTSerif',
               ),
             ),
           ],
@@ -297,7 +300,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             'Photified',
                             style: TextStyle(
                               color: Colors.black,
-                              fontFamily: 'OpenSans',
+                              fontFamily: 'DancingScript',
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold,
                             ),

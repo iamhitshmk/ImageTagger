@@ -94,25 +94,37 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavyBarItem(
             icon: Icon(Icons.apps),
-            title: Text('Home'),
+            title: Text('Home',
+                style: TextStyle(
+                  fontFamily: 'PTSerif',
+                )),
             activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title: Text('Search',
+                style: TextStyle(
+                  fontFamily: 'PTSerif',
+                )),
             activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.notifications),
-            title: Text('Notifications'),
+            title: Text('Notifications',
+                style: TextStyle(
+                  fontFamily: 'PTSerif',
+                )),
             activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profile'),
+            title: Text('Profile',
+                style: TextStyle(
+                  fontFamily: 'PTSerif',
+                )),
             activeColor: Colors.black87,
             textAlign: TextAlign.center,
           ),
