@@ -191,25 +191,32 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _buildSignupBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: _submit,
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.deepPurple[300],
+              Colors.indigo[300],
+              Colors.cyan[100]
+            ],
+          ),
+          borderRadius: BorderRadiusDirectional.circular(50.0),
         ),
-        color: Colors.white,
-        child: Text(
-          'SIGNUP',
-          style: TextStyle(
-            color: Color(0xffc165dd),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
+        child: FlatButton(
+          onPressed: _submit,
+          padding: EdgeInsets.all(15.0),
+          child: Text(
+            'Signup',
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -289,7 +296,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           Text(
                             'Photified',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontFamily: 'OpenSans',
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold,

@@ -109,8 +109,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      Color(0xff5c27fe),
-                      Color(0xffc165dd),
+                      Colors.deepPurple[300],
+                      Colors.indigo[300],
+                      Colors.cyan[100]
                     ],
                   ),
                   borderRadius: BorderRadiusDirectional.circular(15.0),
@@ -308,7 +309,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '0',
+                                    '${_posts.length}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2

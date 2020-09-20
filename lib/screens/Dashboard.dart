@@ -42,8 +42,8 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
   ];
 
   List<Widget> _tiles = const <Widget>[
-    const ImageTile(Colors.green,
-        "https://static.toiimg.com/photo/73173811.cms"),
+    const ImageTile(
+        Colors.green, "https://static.toiimg.com/photo/73173811.cms"),
     const ImageTile(Colors.lightBlue,
         "https://papers.co/wallpaper/papers.co-nh93-mountain-sky-river-nature-scenery-summer-flare-8-wallpaper.jpg"),
     const ImageTile(Colors.amber,
@@ -235,10 +235,25 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
             }),
         floatingActionButton: ScaleTransition(
           scale: _hideFabAnimation,
-          child: FloatingActionButton(
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => BlogScreen())),
-            child: Icon(Icons.add_a_photo),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Colors.deepPurple[300],
+                  Colors.indigo[300],
+                  Colors.cyan[100]
+                ],
+              ),
+              borderRadius: BorderRadiusDirectional.circular(50.0),
+            ),
+            child: FloatingActionButton(
+              backgroundColor: Colors.transparent,
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BlogScreen())),
+              child: Icon(Icons.add_a_photo),
+            ),
           ),
         ),
       ),

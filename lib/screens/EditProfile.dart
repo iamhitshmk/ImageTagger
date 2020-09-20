@@ -23,12 +23,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String _name = '';
   String _bio = '';
   bool _isLoading = false;
+  bool _private = false;
 
   @override
   void initState() {
     super.initState();
     _name = widget.user.name;
     _bio = widget.user.bio;
+    _private = widget.user.private;
   }
 
   _cropImage(File imageFile) async {
@@ -93,6 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         name: _name,
         profileImageUrl: _profileImageUrl,
         bio: _bio,
+        private: _private
       );
       // database update
       DatabaseService.updateUser(user);
@@ -150,6 +153,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ],
                     ),
                   ),
+                  Switch(
+                    value: _private,
+                    onChanged: (value) {
+                      setState(() {
+                        _private = value;
+                      });
+                    },
+                  ),
                   TextFormField(
                     initialValue: _name,
                     style: TextStyle(fontSize: 18.0),
@@ -178,9 +189,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     margin: EdgeInsets.all(40.0),
                     height: 40.0,
                     width: 250.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Colors.deepPurple[300],
+                          Colors.indigo[300],
+                          Colors.cyan[100]
+                        ],
+                      ),
+                      borderRadius: BorderRadiusDirectional.circular(50.0),
+                    ),
                     child: FlatButton(
                       onPressed: _submit,
-                      color: Colors.blue,
                       textColor: Colors.white,
                       child: Text(
                         'Save Profile',
