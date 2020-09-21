@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:photo_view/photo_view.dart';
@@ -26,6 +28,37 @@ class _ImageScreenState extends State<ImageScreen> {
   _likePost() async {
     setState(() {
       _like = !_like;
+    });
+  }
+
+  _download() async {
+    await ImageDownloader.downloadImage('${widget.iconData}');
+    final timer = new Timer(Duration(seconds: 2), () {
+      Widget continueButton = FlatButton(
+        child: Text("Ok",
+            style: TextStyle(
+              fontFamily: 'PTSerif',
+            )),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+      AlertDialog alert = AlertDialog(
+        title: Text("Download"),
+        content: Text("Your Image has been downloaded successfully!",
+            style: TextStyle(
+              fontFamily: 'PTSerif',
+            )),
+        actions: [
+          continueButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
     });
   }
 
@@ -92,8 +125,7 @@ class _ImageScreenState extends State<ImageScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () async => await ImageDownloader.downloadImage(
-                          '${widget.iconData}'),
+                      onTap: () => _download(),
                       child: Container(
                         child: const Icon(
                           Icons.arrow_downward,

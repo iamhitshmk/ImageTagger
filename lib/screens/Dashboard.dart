@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -8,6 +9,8 @@ import 'package:imgtag/screens/Image.dart';
 import 'package:imgtag/screens/ProfileScreen.dart';
 import 'package:imgtag/screens/blog_screen.dart';
 import 'package:imgtag/services/auth_service.dart';
+import 'package:imgtag/services/database_service.dart';
+import 'package:imgtag/utilities/constants.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class Home1 extends StatefulWidget {
@@ -24,7 +27,7 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
   String _error = 'No Error Dectected';
   AnimationController _hideFabAnimation;
   var currentUserId;
-  var list1 = {'name': "Moin Ghadiyali"};
+  User _user = null;
 
   @override
   initState() {
@@ -263,20 +266,6 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
-          leading: GestureDetector(
-            onTap: AuthService.logout,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.network(
-                  'https://in.bmscdn.com/iedb/artist/images/website/poster/large/hrithik_roshan_833_09-08-2016_05-24-02.jpg',
-                  height: 40,
-                  width: 40,
-                ),
-              ),
-            ),
-          ),
           elevation: 1,
           title: Text(
             'Photified',
@@ -332,25 +321,13 @@ class _Home1State extends State<Home1> with TickerProviderStateMixin<Home1> {
             }),
         floatingActionButton: ScaleTransition(
           scale: _hideFabAnimation,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.deepPurple[300],
-                  Colors.indigo[300],
-                  Colors.cyan[100]
-                ],
-              ),
-              borderRadius: BorderRadiusDirectional.circular(50.0),
-            ),
-            child: FloatingActionButton(
-              backgroundColor: Colors.transparent,
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BlogScreen())),
-              child: Icon(Icons.add_a_photo),
-            ),
+          child: FloatingActionButton(
+            backgroundColor: Colors.deepPurple[300],
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BlogScreen(widget.userId))),
+            child: Icon(Icons.add_a_photo),
           ),
         ),
       ),

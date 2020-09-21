@@ -19,23 +19,28 @@ class _SearchScreenState extends State<SearchScreen> {
   Future<QuerySnapshot> _users;
 
   _buildUserTile(User user) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 20.0,
-        backgroundImage: user.profileImageUrl.isEmpty
-            ? AssetImage('assets/images/user-placeholder.jpg')
-            : CachedNetworkImageProvider(user.profileImageUrl),
-      ),
-      title: Text(user.name,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 20.0,
+          backgroundImage: user.profileImageUrl.isEmpty
+              ? AssetImage('assets/images/user-placeholder.jpg')
+              : CachedNetworkImageProvider(user.profileImageUrl),
+        ),
+        title: Text(
+          user.name,
           style: TextStyle(
             fontFamily: 'PTSerif',
-          )),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ProfileScreen(
-            currentUserId: Provider.of<UserData>(context).currentUserId,
-            userId: user.id,
+          ),
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ProfileScreen(
+              currentUserId: Provider.of<UserData>(context).currentUserId,
+              userId: user.id,
+            ),
           ),
         ),
       ),
@@ -62,24 +67,26 @@ class _SearchScreenState extends State<SearchScreen> {
             fontFamily: 'PTSerif',
           ),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-            border: InputBorder.none,
-            hintText: 'Search',
-            hintStyle: TextStyle(
-              fontFamily: 'PTSerif',
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-              size: 30.0,
-            ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear,
+              contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+              border: InputBorder.none,
+              hintText: 'Search',
+              hintStyle: TextStyle(
+                fontFamily: 'PTSerif',
               ),
-              onPressed: _clearSearch,
-            ),
-            filled: true,
-          ),
+              prefixIcon: Icon(
+                Icons.search,
+                size: 30.0,
+                color: Colors.deepPurple[300],
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.clear,
+                  color: Colors.deepPurple[300],
+                ),
+                onPressed: _clearSearch,
+              ),
+              filled: true,
+              fillColor: Colors.white),
           onSubmitted: (input) {
             print(input);
             if (input.isNotEmpty) {
@@ -92,11 +99,23 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _users == null
           ? Center(
-              child: Text(
-                'Search for a user',
-                style: TextStyle(
-                  fontFamily: 'PTSerif',
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.search,
+                    size: 70,
+                    color: Colors.deepPurple[300].withOpacity(0.7),
+                  ),
+                  Text(
+                    'Search for a user',
+                    style: TextStyle(
+                      fontFamily: 'PTSerif',
+                      color: Colors.deepPurple[300].withOpacity(0.7),
+                    ),
+                  ),
+                ],
               ),
             )
           : FutureBuilder(
@@ -109,11 +128,23 @@ class _SearchScreenState extends State<SearchScreen> {
                 }
                 if (snapshot.data.documents.length == 0) {
                   return Center(
-                    child: Text(
-                      'No users found! Please try again.',
-                      style: TextStyle(
-                        fontFamily: 'PTSerif',
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.youtube_searched_for,
+                          size: 70,
+                          color: Colors.deepPurple[300].withOpacity(0.7),
+                        ),
+                        Text(
+                          'No users found! Please try again.',
+                          style: TextStyle(
+                            fontFamily: 'PTSerif',
+                            color: Colors.deepPurple[300].withOpacity(0.7),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }

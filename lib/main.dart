@@ -5,6 +5,7 @@ import 'package:imgtag/screens/HomeScreen.dart';
 import 'package:imgtag/screens/LoginScreen.dart';
 // import 'package:imgtag/screens/login_screen.dart';
 import 'package:imgtag/screens/signup_screen.dart';
+import 'package:imgtag/screens/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

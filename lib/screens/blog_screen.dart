@@ -14,6 +14,9 @@ import 'package:provider/provider.dart';
 import 'package:device_info/device_info.dart';
 
 class BlogScreen extends StatefulWidget {
+  final String userId;
+
+  BlogScreen(this.userId);
   @override
   _BlogScreenState createState() => _BlogScreenState();
 }
@@ -238,7 +241,11 @@ class _BlogScreenState extends State<BlogScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.publish,
+              color: Colors.deepPurple[300],
+              size: 30,
+            ),
             //    onPressed: _submit(),
             onPressed: _submit,
           ),

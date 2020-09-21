@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:imgtag/screens/signup_screen.dart';
 import 'package:imgtag/services/auth_service.dart';
 
@@ -11,7 +10,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
   final _formKey = GlobalKey<FormState>();
   String _email, _password;
 
@@ -133,33 +131,6 @@ class _LoginScreenState extends State<LoginScreen> {
   //   );
   // }
 
-  Widget _buildRememberMeCheckbox(BuildContext context) {
-    return Container(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildLoginBtn(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -280,7 +251,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          _buildRememberMeCheckbox(context),
                           _buildLoginBtn(context),
                           _buildSignupBtn(context),
                         ],

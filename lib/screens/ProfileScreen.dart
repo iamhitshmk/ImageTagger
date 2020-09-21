@@ -149,8 +149,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      Color(0xff5c27fe),
-                      Color(0xffc165dd),
+                      Colors.deepPurple[300],
+                      Colors.indigo[300],
+                      Colors.cyan[100]
                     ],
                   ),
                   borderRadius: BorderRadiusDirectional.circular(15.0),
@@ -445,20 +446,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Icon(
                                 Icons.event_note,
                                 size: 50,
-                                color: Colors.deepPurple[300],
+                                color: Colors.deepPurple[300].withOpacity(0.7),
                               ),
                               Text(
                                 'No Posts',
                                 style: TextStyle(
                                   fontFamily: 'PTSerif',
+                                  color: Colors.deepPurple[300].withOpacity(0.7),
                                 ),
                               ),
                             ],
                           )),
                         )
                       : Container(
-                        alignment: Alignment.bottomLeft,
-                        child: Wrap(
+                          alignment: Alignment.bottomLeft,
+                          child: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.start,
                             alignment: WrapAlignment.start,
                             direction: Axis.horizontal,
@@ -467,7 +469,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .toList()
                                 .cast<Widget>(),
                           ),
-                      ),
+                        ),
                 ],
               ),
             ],
