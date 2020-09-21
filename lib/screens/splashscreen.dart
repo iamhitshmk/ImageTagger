@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:imgtag/screens/LoginScreen.dart';
 
 class LandingScreen extends StatefulWidget {
+  static final String id = 'splash_screen';
   @override
   _LandingScreenState createState() => _LandingScreenState();
 }
@@ -15,7 +16,7 @@ class _LandingScreenState extends State<LandingScreen> {
     super.initState();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.pushReplacement(
+        () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => LoginScreen())));
   }
 
