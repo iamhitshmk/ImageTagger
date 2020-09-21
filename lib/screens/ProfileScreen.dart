@@ -416,56 +416,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               Divider(),
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0.1),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Photos',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'PTSerif',
-                          ),
+              Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.1),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Photos',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'PTSerif',
                         ),
                       ),
                     ),
-                    _posts.length == 0
-                        ? Container(
-                            height: 200,
-                            child: Center(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.event_note,
-                                  size: 50,
-                                  color: Colors.deepPurple[300],
+                  ),
+                  _posts.length == 0
+                      ? Container(
+                          height: 200,
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.event_note,
+                                size: 50,
+                                color: Colors.deepPurple[300],
+                              ),
+                              Text(
+                                'No Posts',
+                                style: TextStyle(
+                                  fontFamily: 'PTSerif',
                                 ),
-                                Text(
-                                  'No Posts',
-                                  style: TextStyle(
-                                    fontFamily: 'PTSerif',
-                                  ),
-                                ),
-                              ],
-                            )),
-                          )
-                        : Wrap(
+                              ),
+                            ],
+                          )),
+                        )
+                      : Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.start,
+                            alignment: WrapAlignment.start,
                             direction: Axis.horizontal,
                             children: _posts
                                 .map((post) => postCard(context, post))
-                                .toList(),
+                                .toList()
+                                .cast<Widget>(),
                           ),
-                  ],
-                ),
+                      ),
+                ],
               ),
             ],
           );

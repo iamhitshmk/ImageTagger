@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:imgtag/models/post_model.dart';
 import 'package:imgtag/models/user_data.dart';
+import 'package:imgtag/screens/HomeScreen.dart';
 import 'package:imgtag/services/database_service.dart';
 import 'package:imgtag/services/storage_service.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -204,7 +205,21 @@ class _BlogScreenState extends State<BlogScreen> {
         _image = null;
         _isLoading = false;
       });
+
+      Navigator.pop(context);
     }
+  }
+
+  _clearLocation() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _locationController.clear());
+    _locationController.clear();
+  }
+
+  _clearDevice() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _deviceController.clear());
+    _deviceController.clear();
   }
 
   @override
@@ -279,53 +294,75 @@ class _BlogScreenState extends State<BlogScreen> {
                         onChanged: (input) => _tags = input,
                       ),
                       SizedBox(height: 15),
-                      TextField(
-                        controller: _deviceController,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: 'PTSerif',
-                        ),
-                        decoration: InputDecoration(
-                          labelText: 'Device Name',
-                          labelStyle: TextStyle(
-                            fontFamily: 'PTSerif',
-                          )
-                        ),
-                        onChanged: (input) => _deviceName = input,
-                      ),
-                      FlatButton(
-                        child: Text(
-                          "Get Device",
-                          style: TextStyle(
-                            fontFamily: 'PTSerif',
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _deviceController,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontFamily: 'PTSerif',
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Device Name',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'PTSerif',
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.clear,
+                                  ),
+                                  onPressed: _clearDevice,
+                                ),
+                              ),
+                              onChanged: (input) => _deviceName = input,
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          info();
-                        },
+                          FlatButton(
+                            child: Icon(
+                              Icons.phone_android,
+                              size: 30,
+                              color: Colors.deepPurple[300],
+                            ),
+                            onPressed: () {
+                              info();
+                            },
+                          ),
+                        ],
                       ),
                       SizedBox(height: 15),
-                      TextField(
-                        controller: _locationController,
-                        style: TextStyle(fontSize: 15.0),
-                        decoration: InputDecoration(
-                          labelText: 'Location',
-                          labelStyle: TextStyle(
-                            fontFamily: 'PTSerif',
-                          )
-                        ),
-                        onChanged: (input) => _location = input,
-                      ),
-                      FlatButton(
-                        child: Text(
-                          "Get location",
-                          style: TextStyle(
-                            fontFamily: 'PTSerif',
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _locationController,
+                              style: TextStyle(fontSize: 15.0),
+                              decoration: InputDecoration(
+                                labelText: 'Location',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'PTSerif',
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.clear,
+                                  ),
+                                  onPressed: _clearLocation,
+                                ),
+                              ),
+                              onChanged: (input) => _location = input,
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          _getCurrentLocation();
-                        },
+                          FlatButton(
+                            child: Icon(
+                              Icons.my_location,
+                              size: 30,
+                              color: Colors.deepPurple[300],
+                            ),
+                            onPressed: () {
+                              _getCurrentLocation();
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
